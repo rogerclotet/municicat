@@ -57,8 +57,9 @@ then:
 docker compose up -d --build
 ```
 
-The app container runs `pnpm db:migrate` on every start before serving traffic, so schema changes
-land automatically on deploy. To load or refresh the dataset:
+The app container runs `pnpm db:migrate` and then `pnpm db:ensure-seed` on every start before
+serving traffic. Schema changes land automatically on deploy, and an empty municipalities table
+is seeded from `data/municipalities.json`. To force a full refresh of the dataset:
 
 ```sh
 docker compose --profile ops run --rm seed
@@ -88,6 +89,7 @@ the server, `git pull`s, and re-runs `docker compose up -d --build`. It needs th
 | `pnpm db:generate` | Generate a migration from `src/db/schema.ts` |
 | `pnpm db:migrate` | Apply pending migrations |
 | `pnpm db:seed` | Upsert the JSON into Postgres (idempotent) |
+| `pnpm db:ensure-seed` | Seed only if the municipalities table is empty |
 
 ## How the daily puzzle is chosen
 

@@ -33,4 +33,4 @@ COPY --from=builder /app/.next ./.next
 
 EXPOSE 3000
 
-CMD ["sh", "-lc", "pnpm db:migrate && pnpm start"]
+CMD ["sh", "-lc", "pnpm db:migrate && pnpm db:ensure-seed && pnpm start"]

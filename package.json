@@ -12,6 +12,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx scripts/migrate.mts",
     "db:seed": "tsx scripts/seed.mts",
+    "db:ensure-seed": "tsx scripts/ensure-seeded.mts",
     "test": "node --import tsx --test \"src/**/*.test.ts\""
   },
   "dependencies": {
