@@ -138,19 +138,19 @@ export function GameBoard({
     <div className="mx-auto w-full max-w-5xl px-5 py-10">
       <p className="label text-center">{formatPuzzleDate(puzzleDate)}</p>
 
-      <figure className="mt-6 flex flex-col items-center">
-        <ClueFrame puzzleDate={puzzleDate} kind={clueKind} />
-        <figcaption className="mt-8 max-w-md text-center">
-          <h1 className="font-display text-2xl font-semibold leading-snug tracking-tight text-balance sm:text-3xl">
-            {CLUE_PROMPT[clueKind]}
-          </h1>
-          {/* The link to the Commons file page would name the municipality, so the
-              credit only becomes a link once the puzzle is solved. */}
-          <p className="mt-2 text-xs text-ink-faint">
-            {CLUE_CREDIT[clueKind]} de Wikimedia Commons
-          </p>
-        </figcaption>
-      </figure>
+      {!solved && (
+        <figure className="mt-6 flex flex-col items-center">
+          <ClueFrame puzzleDate={puzzleDate} kind={clueKind} />
+          <figcaption className="mt-8 max-w-md text-center">
+            <h1 className="font-display text-2xl font-semibold leading-snug tracking-tight text-balance sm:text-3xl">
+              {CLUE_PROMPT[clueKind]}
+            </h1>
+            <p className="mt-2 text-xs text-ink-faint">
+              {CLUE_CREDIT[clueKind]} de Wikimedia Commons
+            </p>
+          </figcaption>
+        </figure>
+      )}
 
       {!solved && (
         <div className="mx-auto mt-8 max-w-xl">
