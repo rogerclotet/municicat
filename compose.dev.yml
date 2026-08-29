@@ -1,0 +1,23 @@
+# Local Postgres only — the app itself runs on the host via `pnpm dev`.
+# Production runs both Postgres and the app via `compose.yaml`.
+name: municicat-dev
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: municicat
+      POSTGRES_PASSWORD: municicat
+      POSTGRES_DB: municicat
+    ports:
+      - "55432:5432"
+    volumes:
+      - municicat-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U municicat"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  municicat-pgdata:

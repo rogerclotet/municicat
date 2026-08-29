@@ -1,0 +1,10 @@
+.env
+.env.*
+.git
+.github
+.idea
+.next
+.vscode
+coverage
+node_modules
+pnpm-debug.log

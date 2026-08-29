@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="shield">
+      <path d="M256 44 L444 44 L444 258 C444 372 362 444 256 476 C150 444 68 372 68 258 L68 44 Z"/>
+    </clipPath>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="#f6efe3"/>
+  <g clip-path="url(#shield)">
+    <rect x="60" y="36" width="392" height="448" fill="#e9c874"/>
+    <g fill="#9a1f22">
+      <rect x="96"  y="36" width="46" height="448"/>
+      <rect x="187" y="36" width="46" height="448"/>
+      <rect x="278" y="36" width="46" height="448"/>
+      <rect x="369" y="36" width="46" height="448"/>
+    </g>
+    <rect x="60" y="36" width="392" height="448" fill="url(#sheen)"/>
+  </g>
+  <path d="M256 44 L444 44 L444 258 C444 372 362 444 256 476 C150 444 68 372 68 258 L68 44 Z"
+        fill="none" stroke="#211a13" stroke-width="14" stroke-linejoin="round"/>
+</svg>
