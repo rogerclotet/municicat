@@ -57,22 +57,27 @@ async function fetchClue(url: string): Promise<ClueImage | null> {
   return null;
 }
 
-export async function GET(_request: NextRequest, context: RouteContext<"/pista/[date]">) {
+export async function GET(
+  _request: NextRequest,
+  context: { params: Promise<{ date: string }> },
+) {
   const { date } = await context.params;
   if (date !== currentPuzzleDate()) {
     return new Response("Not found", { status: 404 });
   }
 
-  if (cached?.date !== date) {
+  let image = cached?.date === date ? cached : null;
+  if (!image) {
     const answer = await getDailyMunicipality(date);
     const fetched = await fetchClue(commonsThumb(pickClue(answer).url, CLUE_WIDTH));
     if (!fetched) return new Response("Clue unavailable", { status: 502 });
-    cached = { ...fetched, date };
+    image = { ...fetched, date };
+    cached = image;
   }
 
-  return new Response(cached.body, {
+  return new Response(image.body, {
     headers: {
-      "Content-Type": cached.contentType,
+      "Content-Type": image.contentType,
       "Cache-Control": `public, max-age=${CACHE_SECONDS}`,
       // Nothing downstream should be able to work backwards to the Commons filename.
       "Content-Disposition": 'inline; filename="pista"',
