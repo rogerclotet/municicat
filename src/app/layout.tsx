@@ -3,6 +3,7 @@ import { Archivo, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import { ServiceWorkerRegistrar } from "./_components/service-worker-registrar";
+import { currentPuzzleDate, formatPuzzleDate } from "@/game/daily";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -35,6 +36,8 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const puzzleDate = formatPuzzleDate(currentPuzzleDate());
+
   return (
     <html
       lang="ca"
@@ -50,12 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             >
               Municicat
             </Link>
-            <Link
-              href="/municipis"
-              className="label transition-colors hover:text-oxblood"
-            >
-              Els 947 municipis
-            </Link>
+            <p className="label">{puzzleDate}</p>
           </nav>
         </header>
         <main className="relative z-10 flex flex-1 flex-col">{children}</main>
