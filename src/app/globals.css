@@ -132,12 +132,21 @@ body::before {
   }
 }
 
-/* The four bars of the senyera, used as a rule rather than as a flag. */
+/* The senyera's nine bars (five gold, four oxblood), stretched once across the rule
+   rather than tiled like a repeating stripe pattern. */
 .senyera-rule {
-  background-image: repeating-linear-gradient(
+  background-color: var(--gold);
+  background-image: linear-gradient(
     90deg,
-    var(--oxblood) 0 14px,
-    var(--gold) 14px 24px
+    var(--gold) 0 11.111%,
+    var(--oxblood) 11.111% 22.222%,
+    var(--gold) 22.222% 33.333%,
+    var(--oxblood) 33.333% 44.444%,
+    var(--gold) 44.444% 55.556%,
+    var(--oxblood) 55.556% 66.667%,
+    var(--gold) 66.667% 77.778%,
+    var(--oxblood) 77.778% 88.889%,
+    var(--gold) 88.889% 100%
   );
 }
 

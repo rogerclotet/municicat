@@ -16,6 +16,8 @@ const INDEX_TTL_MS = 10 * 60 * 1000;
 
 type MunicipalityIndex = {
   ids: string[];
+  /** Ids with a coat of arms or flag — a photo alone is never a fair opening clue. */
+  dailyEligibleIds: string[];
   /** Display names, ordered as the autocomplete should present them. */
   names: string[];
   /** Every accepted spelling — with and without the article — mapped to an id. */
@@ -27,7 +29,12 @@ let inFlight: Promise<MunicipalityIndex> | null = null;
 
 async function loadIndex(): Promise<MunicipalityIndex> {
   const rows = await db
-    .select({ id: municipalities.id, name: municipalities.name })
+    .select({
+      id: municipalities.id,
+      name: municipalities.name,
+      coatOfArmsUrl: municipalities.coatOfArmsUrl,
+      flagUrl: municipalities.flagUrl,
+    })
     .from(municipalities)
     .orderBy(asc(municipalities.sortName));
 
@@ -45,7 +52,14 @@ async function loadIndex(): Promise<MunicipalityIndex> {
     }
   }
 
-  return { ids: rows.map((row) => row.id), names: rows.map((row) => row.name), byKey };
+  return {
+    ids: rows.map((row) => row.id),
+    dailyEligibleIds: rows
+      .filter((row) => row.coatOfArmsUrl || row.flagUrl)
+      .map((row) => row.id),
+    names: rows.map((row) => row.name),
+    byKey,
+  };
 }
 
 export async function getMunicipalityIndex(): Promise<MunicipalityIndex> {
@@ -98,8 +112,8 @@ export async function findMunicipalityByName(input: string): Promise<Municipalit
 }
 
 export async function getDailyMunicipality(puzzleDate: string): Promise<Municipality> {
-  const { ids } = await getMunicipalityIndex();
-  const id = dailyMunicipalityId(puzzleDate, ids);
+  const { dailyEligibleIds } = await getMunicipalityIndex();
+  const id = dailyMunicipalityId(puzzleDate, dailyEligibleIds);
   const municipality = await getMunicipalityById(id);
   if (!municipality) throw new Error(`Daily municipality ${id} is missing from the database`);
   return municipality;

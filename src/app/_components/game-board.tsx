@@ -69,16 +69,6 @@ function ClueFrame({ puzzleDate, kind }: { puzzleDate: string; kind: ClueKind })
   );
 }
 
-function formatPuzzleDate(puzzleDate: string): string {
-  return new Intl.DateTimeFormat("ca-ES", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${puzzleDate}T00:00:00Z`));
-}
-
 export function GameBoard({
   puzzleDate,
   clueKind,
@@ -136,8 +126,6 @@ export function GameBoard({
 
   return (
     <div className="mx-auto w-full max-w-5xl px-5 py-10">
-      <p className="label text-center">{formatPuzzleDate(puzzleDate)}</p>
-
       {!solved && (
         <figure className="mt-6 flex flex-col items-center">
           <ClueFrame puzzleDate={puzzleDate} kind={clueKind} />

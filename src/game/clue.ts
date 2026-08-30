@@ -5,10 +5,11 @@ export type ClueKind = "escut" | "bandera" | "imatge";
 export type Clue = { url: string; kind: ClueKind };
 
 /**
- * The opening clue. 68 municipalities have no coat of arms anywhere on Wikidata or
- * Wikipedia; two of those have a flag, and the remaining 66 fall back to their
- * photograph. The locator map is deliberately not in this chain — it would give the
- * answer away outright, so it is only shown once the puzzle is solved.
+ * The opening clue: coat of arms first, flag otherwise. The daily pick is restricted to
+ * municipalities with one of the two (see `dailyEligibleIds` in `data/queries.ts`), so the
+ * photograph fallback below only fires for `/municipis` browsing, never as an opening clue.
+ * The locator map is deliberately not in this chain — it would give the answer away
+ * outright, so it is only shown once the puzzle is solved.
  */
 export function pickClue(municipality: Municipality): Clue {
   if (municipality.coatOfArmsUrl) return { url: municipality.coatOfArmsUrl, kind: "escut" };

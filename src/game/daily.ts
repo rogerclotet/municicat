@@ -19,6 +19,17 @@ export function currentPuzzleDate(now: Date = new Date()): string {
   }).format(now);
 }
 
+/** Renders a puzzle date for display, e.g. "diumenge, 30 d'agost de 2026". */
+export function formatPuzzleDate(puzzleDate: string): string {
+  return new Intl.DateTimeFormat("ca-ES", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${puzzleDate}T00:00:00Z`));
+}
+
 function daysSinceEpoch(puzzleDate: string): number {
   const day = Date.parse(`${puzzleDate}T00:00:00Z`);
   if (Number.isNaN(day)) throw new Error(`Invalid puzzle date: ${puzzleDate}`);
